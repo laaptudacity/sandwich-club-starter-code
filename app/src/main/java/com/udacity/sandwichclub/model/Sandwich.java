@@ -1,7 +1,11 @@
 package com.udacity.sandwichclub.model;
 
+import org.parceler.Parcel;
+import org.parceler.Parcel.Serialization;
+
 import java.util.List;
 
+@Parcel(Serialization.BEAN)
 public class Sandwich {
 
     private String mainName;

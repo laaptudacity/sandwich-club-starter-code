@@ -17,10 +17,30 @@ android {
         }
     }
 }
+ext {
+    libs = [
+        parcelerVersion   : '1.1.12',
+        appCompatVersion  : '26.1.0',
+        butterKnifeVersion: '8.0.0'
+    ]
+}
+
+configurations.all {
+    resolutionStrategy {
+        force "com.android.support:appcompat-v7:$libs.appCompatVersion"
+    }
+}
+
+
 
 dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "com.android.support:appcompat-v7:$libs.appCompatVersion"
     implementation 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'com.jakewharton.timber:timber:4.7.1'
+    implementation "org.parceler:parceler-api:$libs.parcelerVersion"
+    annotationProcessor "org.parceler:parceler:$libs.parcelerVersion"
+    implementation "com.jakewharton:butterknife:$libs.butterKnifeVersion"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$libs.butterKnifeVersion"
 }

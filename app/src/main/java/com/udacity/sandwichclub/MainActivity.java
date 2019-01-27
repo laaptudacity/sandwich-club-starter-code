@@ -10,14 +10,16 @@ import android.widget.ListView;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String SANDWICH_LIST = "sandwichList";
+    private String[] sandwiches;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        String[] sandwiches = getResources().getStringArray(R.array.sandwich_names);
+        sandwiches = getSandWichList(savedInstanceState);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1, sandwiches);
+            android.R.layout.simple_list_item_1, sandwiches);
 
         // Simplification: Using a ListView instead of a RecyclerView
         ListView listView = findViewById(R.id.sandwiches_listview);
@@ -28,6 +30,20 @@ public class MainActivity extends AppCompatActivity {
                 launchDetailActivity(position);
             }
         });
+    }
+
+    private String[] getSandWichList(Bundle savedInstanceState) {
+        if (savedInstanceState != null && savedInstanceState.containsKey(SANDWICH_LIST)) {
+            return savedInstanceState.getStringArray(SANDWICH_LIST);
+        }
+        return getResources().getStringArray(R.array.sandwich_names);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (sandwiches != null)
+            outState.putStringArray(SANDWICH_LIST, sandwiches);
     }
 
     private void launchDetailActivity(int position) {
